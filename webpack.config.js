@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -12,17 +13,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts']
   },
-
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      inject: true,
-      minify: {
-        removeComments: true,
-        collapseWhitespace: false
-      }
-    })
-  ],
 
   module: {
     rules: [
@@ -38,7 +28,30 @@ module.exports = {
             ]
           }
         }
+      },
+      {
+        test: [/.css$|.scss$/],
+        use:[
+          MiniCssExtractPlugin.loader,
+         'css-loader',
+         'sass-loader',
+         'postcss-loader'
+        ]
       }
     ]
   },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: false
+      }
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'styles.css'
+     })
+  ],
 }

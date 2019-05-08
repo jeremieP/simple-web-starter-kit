@@ -1,1 +1,2 @@
-console.log('JS File')
+import '../src/styles.css';
+import './styles.scss';
